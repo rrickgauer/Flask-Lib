@@ -2,6 +2,13 @@
 Premade Flask tools to speed up development.
 
 
+## Installation
+
+```sh
+pip install --upgrade Flask-Lib
+```
+
+
 ## Modules
 
 * responses
@@ -11,3 +18,5 @@ Premade Flask tools to speed up development.
 * jinja
 * errors
 * mappers
+
+
