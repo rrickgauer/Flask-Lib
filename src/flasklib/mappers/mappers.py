@@ -4,21 +4,32 @@ import uuid
 from dacite.core import from_dict
 import dacite
 from typing import TypeVar, Type, Dict, List
+import enum
 
+
+def _try_map_date_str(day_str: str):
+    """Try mapping a date string value"""
+    
+    try:
+        return datetime.date.fromisoformat(day_str)
+    except:
+        return datetime.datetime.fromisoformat(day_str).date()
 
 T = TypeVar("T")
 
 MAPPER_CONFIG = dacite.Config(
     cast = [
         uuid.UUID, 
+        enum.Enum
     ],
 
     type_hooks = {
         datetime.datetime: datetime.datetime.fromisoformat,
-        datetime.date: datetime.date.fromisoformat,
+        datetime.date: _try_map_date_str,
         datetime.time: datetime.time.fromisoformat,
     },
 )
+
 
 
 def map_dicts(data: List[Dict], class_type: Type[T]) -> List[T]:
@@ -42,3 +53,10 @@ class IMappable:
     def from_dict(cls, data: Dict):
         return map_dict(data, cls)
     
+
+def get_mapper_config() -> dacite.Config:
+    return MAPPER_CONFIG
+
+def set_mapper_config(newconfig: dacite.Config):
+    global MAPPER_CONFIG
+    MAPPER_CONFIG = newconfig
