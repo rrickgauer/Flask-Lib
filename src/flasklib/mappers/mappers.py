@@ -3,7 +3,7 @@ import datetime
 import uuid
 from dacite.core import from_dict
 import dacite
-from typing import TypeVar, Type, Dict, Self, List
+from typing import TypeVar, Type, Dict, List
 
 
 T = TypeVar("T")
